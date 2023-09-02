@@ -43,7 +43,6 @@ func parse() bool {
 func main() {
 
 	if !parse() {
-		fmt.Print("aaaa")
 		showHelp()
 		os.Exit(-1)
 	}

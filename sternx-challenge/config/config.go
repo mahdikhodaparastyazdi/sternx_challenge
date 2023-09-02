@@ -46,7 +46,6 @@ func (c Config) Validate() error {
 func Load(file string) bool {
 	_, err := os.Stat(file)
 	if err != nil {
-		fmt.Print("asdada")
 		return false
 	}
 	fmt.Println(file)
@@ -54,7 +53,7 @@ func Load(file string) bool {
 	viper.SetConfigType("yaml")
 	viper.AddConfigPath(".")
 	viper.AddConfigPath("./config")
-	// viper.SetEnvPrefix(Namespace)
+	viper.SetEnvPrefix(Namespace)
 	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_", "-", "_"))
 	viper.AutomaticEnv()
 
