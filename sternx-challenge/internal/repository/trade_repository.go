@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"sternx-challenge/config"
 	"sternx-challenge/internal/database"
 	"sternx-challenge/internal/model"
 )
@@ -11,11 +12,15 @@ type TradeRepository interface {
 }
 
 type tradeRepository struct {
-	db database.DB
+	db  database.DB
+	cfg *config.Config
 }
 
-func NewTradeRepository(db database.DB) TradeRepository {
-	return &tradeRepository{db: db}
+func NewTradeRepository(db database.DB, cfg *config.Config) TradeRepository {
+	return &tradeRepository{
+		db:  db,
+		cfg: cfg,
+	}
 }
 
 func (r *tradeRepository) GetLatestTrades() ([]model.Trade, error) {

@@ -2,9 +2,13 @@ package server
 
 import (
 	"log"
+	"sternx-challenge/config"
 	"sternx-challenge/internal/handler"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/recover"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 )
 
 type Server interface {
@@ -13,10 +17,14 @@ type Server interface {
 
 type server struct {
 	tradeHandler handler.TradeHandler
+	cfg          *config.Config
 }
 
-func NewServer(tradeHandler handler.TradeHandler) Server {
-	return &server{tradeHandler: tradeHandler}
+func NewServer(tradeHandler handler.TradeHandler, cfg *config.Config) Server {
+	return &server{
+		tradeHandler: tradeHandler,
+		cfg:          cfg,
+	}
 }
 
 func (s *server) Run() error {
@@ -27,12 +35,11 @@ func (s *server) Run() error {
 		Format:     "{\"level\":\"info\",\"task\":\"stern-x\",\"error\":\"${status}\",\"time\":\"${time}\",\"message\":\"${locals:requestid} ${latency} ${method} ${path}\"}\n",
 		TimeFormat: "2006-01-02T15:04:05-0700",
 	}))
-	api := app.Group("/api", middleware)
-	v1 := api.Group("/v1", middleware)
+	api := app.Group("/api", s.tradeHandler.Middleware)
+	v1 := api.Group("/v1", s.tradeHandler.Middleware)
 
 	v1.Get("/latest-trades", s.tradeHandler.HandleLatestTrades)
-
-	err := app.Listen(":8088")
+	err := app.Listen(s.cfg.Server.Addr)
 	if err != nil {
 		log.Fatal(err)
 	}
