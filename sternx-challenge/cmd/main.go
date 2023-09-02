@@ -44,7 +44,7 @@ func main() {
 
 	if !parse() {
 		fmt.Print("aaaa")
-		// showHelp()
+		showHelp()
 		os.Exit(-1)
 	}
 
