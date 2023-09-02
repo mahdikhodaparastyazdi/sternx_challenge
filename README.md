@@ -4,7 +4,7 @@ This task involves writing a SQL query to retrieve the latest trade for each sym
 
 ## Architecture
 
-![Alt text](api-docs/images/task.png "Architect")
+![Alt text](api-docs/images/architecture.png "Architect")
 
 
 ## Development
