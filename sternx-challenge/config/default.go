@@ -8,7 +8,7 @@ db:
   dataSourceName: "user=postgres password=1234 host=localhost dbname=postgres sslmode=disable" 
 
 server:
-  addr: "0.0.0.0:8090"
+  addr: "0.0.0.0:8088"
 
 log:
  level: 
