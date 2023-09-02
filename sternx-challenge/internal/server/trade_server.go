@@ -27,7 +27,10 @@ func (s *server) Run() error {
 		Format:     "{\"level\":\"info\",\"task\":\"stern-x\",\"error\":\"${status}\",\"time\":\"${time}\",\"message\":\"${locals:requestid} ${latency} ${method} ${path}\"}\n",
 		TimeFormat: "2006-01-02T15:04:05-0700",
 	}))
-	app.Get("/latest-trades", s.tradeHandler.HandleLatestTrades)
+	api := app.Group("/api", middleware)
+	v1 := api.Group("/v1", middleware)
+
+	v1.Get("/latest-trades", s.tradeHandler.HandleLatestTrades)
 
 	err := app.Listen(":8088")
 	if err != nil {
