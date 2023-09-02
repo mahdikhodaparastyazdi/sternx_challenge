@@ -9,9 +9,17 @@ This task involves writing a SQL query to retrieve the latest trade for each sym
 
 ## Development
 
-To start the task in the run:
+To start the sternx-challenge in the run:
 
 ```
 go run cmd/main.go
 ```
+To start the sternxcli-challenge in the run:
 
+```
+go run cmd/cli/main.go -num-record <record-numbers>
+```
+### Getting the last trades for each Instrument 
+```
+curl -XGET https://localhost:8088/api/v1/latest-trades
+```
